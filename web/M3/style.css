@@ -36,14 +36,17 @@ p{
 
 a:visited{
     color: #3B1D3D;
+    text-decoration: none;
 }
 
 a:link{
     color: #2E3BB8;
+    text-decoration: none;
 }
 
 a:link:hover{
     color: #4052FF;
+    text-decoration: none;
 }
 
 a:link:active{
@@ -53,6 +56,7 @@ a:link:active{
 
 a:visited:hover{
     color: #4052FF;
+    text-decoration: none;
 }
 
 a:visited:active{
@@ -73,11 +77,20 @@ textarea:focus{
     color: red;
 }
 
-#navbar{
+nav{
     border-bottom: 5px ridge lightblue;
     border-top: 2px solid lightblue;
     text-align: center;
     padding: 5px;
+}
+
+nav li.active{
+    text-decoration: underline;
+}
+
+nav ol, nav li{
+    list-style-type: none;
+    display: inline-block;
 }
 
 #dati{
@@ -138,6 +151,11 @@ button:active{
     position: relative;
     left: 25%;
     top:10px;
+}
+
+#invalidDataWarning{
+    color:red;
+    font-size: 125%;
 }
  
 @media only screen and (min-width: 1280px){

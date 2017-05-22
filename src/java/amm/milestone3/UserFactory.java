@@ -62,10 +62,20 @@ public class UserFactory {
         user4.setDataDiNascita("");
         user4.setPassword("123");
         
+        User user5=new User();
+        user5.setId(4);
+        user5.setNome("ChaoPovery");
+        user5.setCognome("Ocicat");
+        user5.setUrlFotoProfilo("img/user3.jpg");
+        user5.setFrasePresentazione(null);
+        user5.setDataDiNascita("");
+        user5.setPassword("123");
+        
         listaUtenti.add(user1);
         listaUtenti.add(user2);
         listaUtenti.add(user3);
         listaUtenti.add(user4);
+        listaUtenti.add(user5);
     }
     
     public User getUserById(int id){
@@ -75,5 +85,25 @@ public class UserFactory {
             }
         }
         return null;
+    }
+    
+    public int getIdByUserAndPass(String username, String password){
+        for (User user : listaUtenti){
+            if(user.getNome()+' '+user.getCognome()==username && 
+               user.getPassword()==password){
+                return user.getId();
+            }
+        }
+        return -1;
+    }
+    
+    public boolean completeData(int id){
+        User user= UserFactory.getInstance().getUserById(id);
+        
+            if(user.getNome()!=null && user.getCognome()!=null && 
+               user.getUrlFotoProfilo()!=null && user.getFrasePresentazione()!=null){
+                return true;
+            }
+        return false;
     }
 }

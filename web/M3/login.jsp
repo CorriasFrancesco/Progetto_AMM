@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <html>
@@ -10,16 +12,18 @@
     </head>
     
     <body>
+                <!--header contenente in titolo della pagina-->
+        <c:set var="title" value="Login" scope="request"/>
+        <jsp:include page="header.jsp"/>
         
-        <div id='navbar'>
-            <a href='descrizione.html'>Descrizione</a>
-            <a href='profilo.html'>Profilo</a>
-            <a href='bacheca.html'>Bacheca</a>
-        </div>
-        <h1>Nerdbook</h1>
+        <c:set var="page" value="login" scope="request"/>
+        <jsp:include page="navbar.jsp"/>
        
         
         <div id="login_form">
+            <c:if test="${invalidData == true}">
+                <div id="invalidDataWarning">I dati inseriti non sono corretti</div>
+            </c:if>
             <form>
                 <label for="user">Username</label>
                 <input type="text" name="user" id="user">

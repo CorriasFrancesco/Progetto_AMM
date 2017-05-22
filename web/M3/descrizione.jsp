@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <html>
@@ -10,22 +12,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     
-    <body>        
-        <div id="navbar">
-            <a href=login.html>Login</a>  <!--Collegamento alla pagina di login-->
-        </div>
-        <div id="header">
-            <h1>Nerdbook</h1>
-        </div>
+    <body>
+                <!--header contenente in titolo della pagina-->
+        <c:set var="title" value="Descrizione" scope="request"/>
+        <jsp:include page="header.jsp"/>
+        
+        <c:set var="page" value="descrizione" scope="request"/>
+        <jsp:include page="navbar.jsp"/>
          
-        <div id="sidebar">
-            <div id="persone">
-                <p>Persone</p>
-            </div>
-            <div id="gruppi">
-                <p>Gruppi</p>
-            </div>
-        </div>
+        <jsp:include page="sidebar.jsp"/>
   
         <div id="content">
             <div id='sommario'>
@@ -44,7 +39,7 @@
                     </p>
 
                     <h3>E' gratis?</h3>
-                    <p>Si, Nerdbook è gratis e lo sarà sempre.
+                    <p>Si, Nerdbook è gratis e lo sarà  sempre.
                     </p>
                 </a>
 
@@ -58,7 +53,7 @@
                     </p>
 
                     <h3>Amministratori</h3>
-                    <p>L’amministratore è un utente speciale che può cancellare 
+                    <p>L'amministratore è un utente speciale che può cancellare 
                         post di qualsiasi utente e qualsiasi gruppo ritenuti 
                         poco appropriati.
                     </p>
