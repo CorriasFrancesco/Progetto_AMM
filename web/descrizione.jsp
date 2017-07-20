@@ -53,7 +53,7 @@
                     </p>
                     </a>
                 </a>
-
+ 
                 <a id='tipologie_utenti'>
                     <h2>Tipologie di utenti</h2>
                     <a id='registrati'>
