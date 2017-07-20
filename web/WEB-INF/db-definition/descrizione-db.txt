@@ -1,1 +1,34 @@
- 
+postType
+    posttype_id (primario)
+    posttype_name
+
+utenti
+    id (primario)
+    nome
+    cognome
+    urlFotoProfilo
+    frasePresentazione
+    data DiNascita
+    password
+
+posts
+    post_id (primaria)
+    content
+    type (chiave esterna)
+    author(chiave esterna)
+
+groups
+    group_id (primario)
+    nome
+
+iscrizioni (relazione gruppo-utente: many to many)
+    gruppo (primario, chiave esterna)
+    iscritto (primario, chiave esterna)
+
+
+posts.author -> utenti.id (many to one)
+posts.type -> postType.posttype_id (one to many)
+
+iscrizioni.gruppo -> groups.group_id
+iscrizioni.iscritto -> utenti.id
+

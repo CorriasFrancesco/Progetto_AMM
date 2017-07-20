@@ -27,38 +27,51 @@ public class Profilo extends HttpServlet {
         
         HttpSession session= request.getSession();
         
-        if (session.getAttribute("loggedIn") == null ||
+        if (session==null || session.getAttribute("loggedIn") == null ||
             !session.getAttribute("loggedIn").equals(true)){
             
-            response.sendError(401, "Per poter visualizzare il profilo è nesessario autenticarsi");
+            //Se l'utente entra nel profilo senza aver effettuato l'accesso viene reindirizzato
+            request.setAttribute("accessDenieded", true);
+            request.getRequestDispatcher("login.jsp").forward(request,response);
         }
         else{
-            if (session.getAttribute("loggedIn") != null &&
+            if (session!=null && session.getAttribute("loggedIn") != null &&
                 session.getAttribute("loggedIn").equals(true)){
                 
-                User user=UserFactory.getInstance().getUserById((int)session.getAttribute("loggedUserID"));
+                if(session.getAttribute("elimina")!=null){
+                    if(Integer.parseInt(request.getParameter("elimina"))==1){
+                    request.setAttribute("confirm", true);
+                    }
+                    else{
+                        UserFactory.getInstance().deleteUser((int)(session.getAttribute("loggedUserID")));
+                        request.getRequestDispatcher("Login").forward(request, response);
+                    }
                 
-                if(request.getMethod()=="submit"){
-                    request.setAttribute("update", true);
-                    
-                    user.setNome((String)request.getAttribute("nome"));
-                    user.setCognome((String)request.getAttribute("cognome"));
-                    user.setUrlFotoProfilo((String)request.getAttribute("img_profilo"));
-                    user.setFrasePresentazione((String)request.getAttribute("presentazione"));
-                    user.setDataDiNascita((String)request.getAttribute("data"));
-                    user.setPassword((String)request.getAttribute("pwd")); 
                 }
-            
-                
-                request.setAttribute("userNome", user.getNome());
-                request.setAttribute("userCognome", user.getCognome());
-                request.setAttribute("userUrlFotoProfilo", user.getUrlFotoProfilo());
-                request.setAttribute("userFrasePresentazione", user.getFrasePresentazione());
-                request.setAttribute("userDataDiNascita", user.getDataDiNascita());
-                request.setAttribute("userPassword", user.getPassword());
-                
-                request.getRequestDispatcher("profilo.jsp").forward(request, response);
-                return;                
+                else{
+                    User user=UserFactory.getInstance().getUserById((int)session.getAttribute("loggedUserID"));
+
+                    if(request.getMethod().equals("submit")){
+                        request.setAttribute("update", true);
+
+                        user.setNome((String)request.getAttribute("nome"));
+                        user.setCognome((String)request.getAttribute("cognome"));
+                        user.setUrlFotoProfilo((String)request.getAttribute("img_profilo"));
+                        user.setFrasePresentazione((String)request.getAttribute("presentazione"));
+                        user.setDataDiNascita((String)request.getAttribute("data"));
+                        user.setPassword((String)request.getAttribute("pwd")); 
+                    }
+
+                    request.setAttribute("userNome", user.getNome());
+                    request.setAttribute("userCognome", user.getCognome());
+                    request.setAttribute("userUrlFotoProfilo", user.getUrlFotoProfilo());
+                    request.setAttribute("userFrasePresentazione", user.getFrasePresentazione());
+                    request.setAttribute("userDataDiNascita", user.getDataDiNascita());
+                    request.setAttribute("userPassword", user.getPassword());
+
+                    request.getRequestDispatcher("profilo.jsp").forward(request, response);
+                    return;     
+                }
             }
               
         }

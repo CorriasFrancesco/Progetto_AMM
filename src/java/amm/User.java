@@ -34,6 +34,7 @@ public class User {
     }
 
     public void setId(int id) {
+        save("id", (Integer)id);
         this.id = id;
     }
 
@@ -43,6 +44,7 @@ public class User {
 
     public void setNome(String nome) {
         this.nome = nome;
+        save("nome", nome);
     }
 
     public String getCognome() {
@@ -51,6 +53,7 @@ public class User {
 
     public void setCognome(String cognome) {
         this.cognome = cognome;
+        save("cognome", cognome);
     }
 
     public String getUrlFotoProfilo() {
@@ -59,6 +62,7 @@ public class User {
 
     public void setUrlFotoProfilo(String urlFotoProfilo) {
         this.urlFotoProfilo = urlFotoProfilo;
+        save("urlFotoProfilo", urlFotoProfilo);
     }
 
     public String getFrasePresentazione() {
@@ -67,6 +71,7 @@ public class User {
 
     public void setFrasePresentazione(String frasePresentazione) {
         this.frasePresentazione = frasePresentazione;
+        save("frasePresentazione", frasePresentazione);
     }
 
     public String getDataDiNascita() {
@@ -75,6 +80,7 @@ public class User {
 
     public void setDataDiNascita(String dataDiNascita) {
         this.dataDiNascita = dataDiNascita;
+        save("dataDiNascita", dataDiNascita);
     }
 
     public String getPassword() {
@@ -83,6 +89,7 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+        save("password", password);
     }
     
     public boolean equals(Object user){
@@ -93,5 +100,15 @@ public class User {
         }
         return false;
     }
-       
+    
+    public void save(String attributo, Object valore){
+        if(valore instanceof String){
+            UserFactory.getInstance().save(attributo, (String)valore, this.id);
+        }
+        else{
+            if(valore instanceof Integer){
+                UserFactory.getInstance().save(attributo, (int)valore, this.id);
+            }
+        }
+    }
 }

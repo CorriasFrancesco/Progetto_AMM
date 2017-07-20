@@ -24,18 +24,22 @@
         <div id="login_form">
             
             <c:if test="${invalidData == true}">
-                <div id="invalidDataWarning">I dati inseriti non sono corretti</div>
+                <div id="invalidDataWarning">I dati inseriti non sono corretti: ${loggedUserID}</div>
+                 <div id="invalidDataWarning">I dati inseriti non sono corretti: ${path}</div>
             </c:if>
-            <c:if test="${accessDenied==true}">
-                <div id="accessDeniedError">Utente già autenticato</div>
+            <c:if test="${accessDenieded == true}">
+                <div id="invalidDataWarning">Devi fare il login</div>
+            </c:if>
+            <c:if test="${loggedUserID == 40000}">
+                <div id="invalidDataWarning">Porcoddio </div>
             </c:if>
             
             <form action="Login" method="post">
                 <label for="user">Username</label>
-                <input type="text" name="user" id="user">
+                <input type="text" name="user" id="user" required>
                 <br />
                 <label for="pswd">Password</label>
-                <input type="password" name="pswd" id="pswd">
+                <input type="password" name="pswd" id="pswd" required>
                 <br /><br />
                 <button type="submit">Login</button>
             </form>

@@ -8,10 +8,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <div id="sidebar">
-    <div id="persone">
-        <p>Persone</p>
+    <div id="ricerca">
+        <input type="text" id="ricerca" name="ricerca" onkeyup= "aggiorna()"/>
+        <button id="filter">Cerca</button>     
     </div>
+    
+    <div id="persone">
+        <c:forEach var="user" items="${users}">
+            <p class="personName"><a href="Bacheca?user=${user.id}">${user.nome} ${user.cognome}</a></p>
+        </c:forEach>
+    </div>
+
     <div id="gruppi">
-        <p>Gruppi</p>
+        <h2>Gruppi:</h2>
+        <c:forEach var="group" items="${groups}">
+            <p class="groupName"><a href="Bacheca?group=${group.id}">${group.nome}</a></p>
+        </c:forEach>
     </div>
 </div>

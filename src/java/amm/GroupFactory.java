@@ -5,6 +5,11 @@
  */
 package amm;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +28,10 @@ public class GroupFactory {
         return singleton;
     }
     
-    private ArrayList<Group> listaGruppi=new ArrayList<Group>();
+    //private ArrayList<Group> listaGruppi=new ArrayList<Group>();
     
     private GroupFactory() {
-        UserFactory userFactory = UserFactory.getInstance();
+        /*UserFactory userFactory = UserFactory.getInstance();
         
         Group gruppo1 = new Group();
         gruppo1.setNomeGruppo("Gruppo");
@@ -57,16 +62,77 @@ public class GroupFactory {
         listaGruppi.add(gruppo1);
         listaGruppi.add(gruppo2);
         listaGruppi.add(gruppo3);
-        listaGruppi.add(gruppo4);
+        listaGruppi.add(gruppo4);*/
     }
     
     public Group getGroupById(int id){
-        for(Group group:listaGruppi){
-            if(group.getId()==id){
-                return group;
+        
+        try {
+            // path, username, password
+            Connection conn = DriverManager.getConnection(connectionString, "amm", "amm");
+            
+            String query = 
+                      "select * from groups "
+                    + "where group_id = ?";
+            
+            // Prepared Statement
+            PreparedStatement stmt = conn.prepareStatement(query);
+            
+            // Si associano i valori
+            stmt.setInt(1, id);
+            
+            // Esecuzione query
+            ResultSet res = stmt.executeQuery();
+
+            // ciclo sulle righe restituite
+            if (res.next()) {
+                Group current = new Group();
+                
+                current.setId(res.getInt("group_id"));
+                current.setNomeGruppo(res.getString("group_id"));
+                
+                stmt.close();
+                conn.close();
+                return current;
             }
+
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
+    }
+    
+    public List<Group> getGroupsList()
+    {
+        List<Group> listaGruppi = new ArrayList<>();
+        
+        try {
+            Connection connessione = DriverManager.getConnection(connectionString, "amm", "amm");
+            
+            String query = "select * from gruppi";
+            
+            PreparedStatement stmt = connessione.prepareStatement(query);
+            
+            ResultSet res = stmt.executeQuery();
+
+            while (res.next()) {
+                Group gruppoAttuale = new Group();
+                
+                gruppoAttuale.setId(res.getInt("gruppoId"));
+                gruppoAttuale.setNomeGruppo(res.getString("nome"));
+                listaGruppi.add(gruppoAttuale);
+            }
+            
+
+            stmt.close();
+            connessione.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaGruppi;
     }
     
     public void setConnectionString(String s){

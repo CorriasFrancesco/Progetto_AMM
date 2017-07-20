@@ -9,8 +9,9 @@ import amm.UserFactory;
 import amm.User;
 import amm.PostFactory;
 import amm.Post;
+import amm.Group;
+import amm.GroupFactory;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,20 +38,24 @@ public class Bacheca extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        HttpSession session= request.getSession();
+        HttpSession session= request.getSession(false);
         
-        if (session.getAttribute("loggedIn") == null ||
+        if (session==null || session.getAttribute("loggedIn") == null ||
             !session.getAttribute("loggedIn").equals(true)){
             
-            response.sendError(401, "Per poter visualizzare il profilo è nesessario autenticarsi");
+            //Se l'utente entra nella bacheca senza aver effettuato l'accesso viene reindirizzato
+            request.setAttribute("accessDenieded", true);
+            request.getRequestDispatcher("login.jsp").forward(request,response);
         }
         else{
-            if(session.getAttribute("loggedIn") != null &&
-                session.getAttribute("loggedIn").equals(true) &&
-                (int)session.getAttribute("loggedUserID")!=-1){
+            if(session!=null &&
+               session.getAttribute("loggedIn") != null &&
+               session.getAttribute("loggedIn").equals(true) &&
+               (int)session.getAttribute("loggedUserID")!=-1){
 
                 User user=UserFactory.getInstance().getUserById((int)session.getAttribute("loggedUserID"));
-                List<Post> postList=PostFactory.getInstance().getPostList(user);
+                List<Post> postList;
+                postList = PostFactory.getInstance().getPostList(user);
                                 
                 request.setAttribute("post", postList);
                 request.getRequestDispatcher("bacheca.jsp").forward(request, response);

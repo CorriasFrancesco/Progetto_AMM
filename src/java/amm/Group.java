@@ -15,13 +15,10 @@ public class Group {
     
     private int id;
     private String nomeGruppo;
-    private String urlImmagineGruppo;
-    private ArrayList<User> iscritti=new ArrayList<User>();
     
     public Group(){
         id=-1;
         nomeGruppo="";
-        urlImmagineGruppo="";
     }
             
     public int getId() {
@@ -38,22 +35,6 @@ public class Group {
 
     public void setNomeGruppo(String nomeGruppo) {
         this.nomeGruppo = nomeGruppo;
-    }
-
-    public String getUrlImmagineGruppo() {
-        return urlImmagineGruppo;
-    }
-
-    public void setUrlImmagineGruppo(String urlImmagineGruppo) {
-        this.urlImmagineGruppo = urlImmagineGruppo;
-    }
-    
-    public ArrayList<User> getIscritti() {
-        return iscritti;
-    }
-
-    public void setIscritti(User iscritto) {
-        this.iscritti.add(iscritto);
     }
     
     public boolean equals (Object group){

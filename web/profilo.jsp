@@ -25,24 +25,35 @@
             <c:if test="${update == true}">
                 <div id="updateMessage">Dati aggiornati correttamente</div>
             </c:if>
+            
+            <c:choose>
+                <c:when test="${confirm==true}">
+                    <div id="deleteMessage">Vuoi davvero elimanre il profilo?</div>
+                    <form action="Profilo" method="post">
+                        <button type="submit">No</button>
+                        <button type="Delete"><a href="Profilo?elimina=2">Si</button>
+                    </form>
+                </c:when>
+            </c:choose> 
             <div id='dati'>
                 <form action="Profilo" method="post">
                     <label for='nome'>Nome</label>
-                    <input type="text" name='nome' id='nome' value="${userNome}">
+                    <input type="text" name='nome' id='nome' value="${userNome}" required>
                     <label for='cognome'>Cognome</label>
-                    <input type='text' name='cognome' id='cognome' value="${userCognome}">
+                    <input type='text' name='cognome' id='cognome' value="${userCognome}" required>
                     <label for='img_profilo'>URL dell' immagine profilo</label>
-                    <input type='url' name='img_profilo' id='img_profilo' value="${userUrlFotoProfilo}">
+                    <input type='url' name='img_profilo' id='img_profilo' value="${userUrlFotoProfilo}" required>
                     <label for='presentazione'>Frase di presentazione</label>
-                    <textarea rows='1' cols='20' name='presentazione' id='presentazione' value="${userFrasePresentazione}"></textarea>
+                    <textarea rows='1' cols='20' name='presentazione' id='presentazione' value="${userFrasePresentazione}" required></textarea>
                     <label for='data'>Data di nascita</label>
-                    <input type="date" name='data' id='data' value="${userDataDiNascita}">
+                    <input type="date" name='data' id='data' value="${userDataDiNascita}" required>
                     <label for='pwd'>Password</label>
-                    <input type="password" name='pwd' id='pwd' value${userPassword}>
+                    <input type="password" name='pwd' id='pwd' value${userPassword} required>
                     <label for='conferma_pwd'>Conferma password</label>
-                    <input type='password' name='conferma_pwd' id='conferma_pwd' value="${userPassword}">
+                    <input type='password' name='conferma_pwd' id='conferma_pwd' value="${userPassword}" required>
                     <br /><br />
                     <button type="submit">Update</button>
+                    <button type="Delete"><a href="Profilo?elimina=1">Elimina Profilo</button>
                 </form>
             </div>
         </div>

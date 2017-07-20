@@ -12,6 +12,6 @@
         <li <c:if test="${page=='descrizione'}">class="active"</c:if>><a href="descrizione.jsp">Descrizione</a></li>
         <li <c:if test="${page=='profilo'}">class="active"</c:if>><a href="Profilo">Profilo</a></li>
         <li <c:if test="${page=='login'}">class="active"</c:if>><a href="Login">Login</a></li>
-        <li <c:if test="${page!='login'}"><p id="logOutLink"><a href="Login?logout=1">Logout</a></p></c:if></li>
+        <li <c:if test="${not empty loggedUserID}"><p id="logOutLink"><a href="Login?logout=1">Logout</a></p></c:if></li>
     </ol>
 </nav>
